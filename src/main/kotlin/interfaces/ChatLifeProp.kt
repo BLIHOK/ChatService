@@ -5,4 +5,6 @@ interface ChatLifeProp {
         get() = 0
     val isDeleted: Boolean
         get() = false
+    val isChecked:Boolean
+        get() = false
 }

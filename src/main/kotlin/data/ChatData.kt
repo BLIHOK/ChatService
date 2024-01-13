@@ -3,16 +3,12 @@ package data
 import interfaces.ChatLifeProp
 
 data class ChatData(
-    val title: String = "empty data.Chat",
+    val title: String = "a new Chat",
     val data: Int = 2024,
-    val user: User,
-    override val id: Int,
-    override val isDeleted: Boolean,
+    val user: UserData = UserData(),
+    override val id: Int = 0,
+    override var isDeleted: Boolean = false,
+    override val isChecked: Boolean = false
+    ) : ChatLifeProp
 
-    ) : ChatLifeProp {
 
-    data class User(
-        val name: String = "noName",
-        val userID: Int = 0
-    )
-}
