@@ -8,7 +8,7 @@ data class ChatData(
     val user: UserData = UserData(),
     override val id: Int = 0,
     override var isDeleted: Boolean = false,
-    override val isChecked: Boolean = false
+    override var isChecked: Boolean = false
     ) : ChatLifeProp
 
 

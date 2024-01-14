@@ -1,6 +1,6 @@
-import data.ChatData
 import data.MessageData
 import data.UserData
+import modules.Message
 import services.ChatService
 
 fun main() {
@@ -29,15 +29,15 @@ fun main() {
         false,
         false
     )
-    val message2 = MessageData(
-        "How are you?",
-        2024,
-        user = UserData("Sergey", 0),
-        chatId = 0,
-        0,
-        false,
-        false
-    )
+//    val message2 = MessageData(
+//        "How are you?",
+//        2024,
+//        user = UserData("Sergey", 0),
+//        chatId = 0,
+//        0,
+//        false,
+//        false
+//    )
     val message3 = MessageData(
         "Im fine",
         2024,
@@ -50,7 +50,7 @@ fun main() {
     val updateMessage = MessageData(
         "Im updated Message",
         2024,
-        user = UserData("Alex", 1),
+        user = UserData("Sergey", 0),
         chatId = 0,
         0,
         false,
@@ -58,29 +58,26 @@ fun main() {
     )
 
     ChatService.createMessage(1, message1)
-//    ChatService.getChats()
-//    ChatService.readMessage()
-    ChatService.createMessage(1, message2)
-//    ChatService.readMessage()
-//    ChatService.updateMessage(1, updateMessage)
-    ChatService.createMessage(2, message1)
-    ChatService.getChats()
-    ChatService.readMessage()
-//    ChatService.deleteMessage(1, MessageData())
-//    ChatService.readMessage()
-//    ChatService.getUnreadedChats()
-//    println()
-    ChatService.deleteChat(1, ChatData())
-    ChatService.getChats()
-    ChatService.readMessage()
-    println(ChatService.getUnreadedChats())
-    println(ChatService.getMessagesFromChat(0, MessageData()))
-//
-//    ChatService.createChat(chat2)
-//    ChatService.deleteChat(chat2)
-//    ChatService.readChat()
-//    ChatService.getChatByUserId(0, ChatData())
-//    ChatService.deleteChat(0, ChatData())
+    ChatService.createMessage(1, message1)
+    ChatService.createMessage(1, message1)
+    ChatService.createMessage(2, message3)
+    println(ChatService.getChats())
+    println(ChatService.getUnreadChatsCount())
+    println()
+
+
+//    println(ChatService.getUserMessagesInChat(0, 1, 1))
+//    println(ChatService.getUnreadChatsCount())
+//    println(ChatService.getChats())
+    println()
+//    ChatService.deleteChat(1, ChatData())
+//    println(ChatService.getChats())
+    println(ChatService.getUserMessagesInChat(0, 3, 1))
+    ChatService.updateMessage(1, updateMessage)
+    println(ChatService.getUserMessagesInChat(0, 3, 1))
+    println(ChatService.getUserMessagesInChat(1, 1, 2))
+    ChatService.deleteMessage(1, MessageData())
+    println(ChatService.getUserMessagesInChat(0, 3, 1))
+    println()
+    println(ChatService.getLastMessagesOfAllChats())
 }
-
-

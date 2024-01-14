@@ -9,5 +9,5 @@ data class MessageData(
     val chatId: Int = 0,
     override var id: Int = 0,
     override var isDeleted: Boolean = false,
-    override val isChecked: Boolean = false
+    override var isChecked: Boolean = false
 ) : ChatLifeProp

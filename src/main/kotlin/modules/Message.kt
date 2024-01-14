@@ -3,23 +3,34 @@ package modules
 import data.MessageData
 import interfaces.ChatCRUD
 
-class Message(
-    override val storage: MutableList<MessageData>,
-    var messageIdCount: Int = 0,
-) : ChatCRUD<MessageData> {
+class Message : ChatCRUD<MessageData> {
+
+    override val storage: List<MessageData>
+        get() = storageIn
+    var messageIdCount: Int = 0
+    private val storageIn: MutableList<MessageData> = mutableListOf()
 
 
     override fun create(element: MessageData): Boolean {
         messageIdCount++
         val e = element.copy(id = messageIdCount)
-        storage.add(e)
+        storageIn.add(e)
         return true
     }
 
 
     override fun update(element: MessageData): Boolean {
-        return super.update(element)
+        for ((i, b) in storageIn.withIndex()) {
+            if (element.id == b.id) {
+                storageIn[i] = element
+                println("The object has been updated!")
+                return true
+            }
+        }
+        println("Object not exist or wrong Id!")
+        return false
     }
+
 
     override fun delete(element: MessageData): Boolean {
         if (storage.isNotEmpty()) {
@@ -38,12 +49,4 @@ class Message(
         return message
     }
 
-    fun getMessagesFromChat(userId: Int, element: MessageData): MutableList<MessageData> {
-        val message = mutableListOf<MessageData>()
-        for ((i, b) in storage.withIndex())
-            if (userId == b.user.userID) {
-                message.add(b)
-            }
-        return message
-    }
 }

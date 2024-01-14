@@ -3,38 +3,29 @@ package modules
 import data.ChatData
 import interfaces.ChatCRUD
 
-class Chat(
-    override val storage: MutableList<ChatData>,
-    var chatIdCount: Int = 0,
-) : ChatCRUD<ChatData> {
+class Chat : ChatCRUD<ChatData> {
+
+    override val storage: List<ChatData>
+        get() = storageIn
+    var chatIdCount: Int = 0
+    private val storageIn: MutableList<ChatData> = mutableListOf()
+
 
     override fun create(element: ChatData): Boolean {
         chatIdCount++
         val e = element.copy(id = chatIdCount)
-        storage.add(e)
+        storageIn.add(e)
         return true
     }
 
+    override fun update(element: ChatData): Boolean  = true
 
     override fun delete(element: ChatData): Boolean {
-        if(storage.isNotEmpty()) {
-            storage.first{it.id == element.id}.isDeleted = true
+        if (storage.isNotEmpty()) {
+            storage.first { it.id == element.id }.isDeleted = true
             return true
         }
         return false
     }
 
-
-    fun getUnreadedChats(): MutableList<ChatData> {
-        val unreadedChat = mutableListOf<ChatData>()
-        storage.forEach {
-            if (it.isChecked == false) unreadedChat.add(it)
-        }
-        println(unreadedChat)
-        return unreadedChat
-    }
-
-//    fun getChatByUserId(id: Int): ChatData {
-//        return storage.first { it.user.userID == id }
-//    }
 }
