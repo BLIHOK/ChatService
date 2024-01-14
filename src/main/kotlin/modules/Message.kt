@@ -7,7 +7,7 @@ class Message : ChatCRUD<MessageData> {
 
     override val storage: List<MessageData>
         get() = storageIn
-    var messageIdCount: Int = 0
+    private var messageIdCount: Int = 0
     private val storageIn: MutableList<MessageData> = mutableListOf()
 
 

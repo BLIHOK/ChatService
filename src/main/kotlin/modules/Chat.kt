@@ -7,7 +7,7 @@ class Chat : ChatCRUD<ChatData> {
 
     override val storage: List<ChatData>
         get() = storageIn
-    var chatIdCount: Int = 0
+    private var chatIdCount: Int = 0
     private val storageIn: MutableList<ChatData> = mutableListOf()
 
 

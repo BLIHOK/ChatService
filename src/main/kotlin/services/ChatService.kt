@@ -59,16 +59,15 @@ object ChatService {
     fun updateMessage(messageId: Int, element: MessageData): Boolean = messageCRUD.update(element.copy(id = messageId))
 
     fun deleteMessage(messageId: Int, element: MessageData): Boolean {
-        val chatToFind = messageCRUD.storage.filter { it.id == messageId }.first()
+        val chatToFind = messageCRUD.storage.first { it.id == messageId }
         if (chatToFind.id == messageId) {
             return messageCRUD.delete(element.copy(id = messageId))
         }
         return false
     }
 
-    fun getLastMessagesOfAllChats(): List<MessageData>{
-        val listInLists = messageCRUD.storage.distinctBy { it.chatId }
-            return listInLists
+    fun getLastMessagesOfAllChats(): List<MessageData> {
+        return messageCRUD.storage.distinctBy { it.chatId }
     }
 
 }
