@@ -23,8 +23,8 @@ object ChatService {
         return checkedMessages
     }
 
-    //1,                3,              2
-    fun getUserMessagesInChat(userId: Int, countOfMsg: Int, chatId: Int): List<MessageData> { //+
+
+    fun getUserMessagesInChat(userId: Int, countOfMsg: Int, chatId: Int): List<MessageData> {
         val findChat = chatCRUD.storage.first { it.id == chatId }.id
         val listOfUserMsg = messageCRUD.storage.filter { it.user.userID == userId && chatId == findChat }
 
@@ -37,7 +37,7 @@ object ChatService {
         return listOfUserMsg
     }
 
-    fun deleteChat(id: Int, element: ChatData): Boolean {  ////+
+    fun deleteChat(id: Int, element: ChatData): Boolean {
         val messagesForChat = messageCRUD.getComments(MessageData(chatId = id))
         if (messageCRUD.storage.isNotEmpty()) {
             messagesForChat.forEach { it.isDeleted = true }
@@ -46,14 +46,13 @@ object ChatService {
     }
 
 
-    fun createMessage(chatId: Int, element: MessageData): Boolean {
+    fun createMessage(chatId: Int, element: MessageData) {
         val store = chatCRUD.storage
-//        if (!store.contains(ChatData(id = chatId)) || store.isEmpty()) {
         if (store.isEmpty() || store.none { it.id == chatId }) {
             chatCRUD.create(ChatData(user = UserData(name = element.user.name, userID = element.user.userID)))
-            return messageCRUD.create(element.copy(chatId = chatId))
-        }
-        return messageCRUD.create(element.copy(chatId = chatId))
+
+            messageCRUD.create(element.copy(chatId = chatId))
+        }else messageCRUD.create(element.copy(chatId = chatId))
     }
 
     fun updateMessage(messageId: Int, element: MessageData): Boolean = messageCRUD.update(element.copy(id = messageId))
@@ -69,5 +68,8 @@ object ChatService {
     fun getLastMessagesOfAllChats(): List<MessageData> {
         return messageCRUD.storage.distinctBy { it.chatId }
     }
-
+    fun clear() {
+        chatCRUD.clear()
+        messageCRUD.clear()
+    }
 }

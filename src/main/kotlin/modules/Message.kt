@@ -10,12 +10,14 @@ class Message : ChatCRUD<MessageData> {
     private var messageIdCount: Int = 0
     private val storageIn: MutableList<MessageData> = mutableListOf()
 
+    override fun clear() {
+        storageIn.clear()
+    }
 
-    override fun create(element: MessageData): Boolean {
+    override fun create(element: MessageData) {
         messageIdCount++
         val e = element.copy(id = messageIdCount)
         storageIn.add(e)
-        return true
     }
 
 
