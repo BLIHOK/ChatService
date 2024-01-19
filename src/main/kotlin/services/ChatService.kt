@@ -10,6 +10,12 @@ object ChatService {
     private val chatCRUD: Chat = Chat()
     private val messageCRUD: Message = Message()
 
+    fun clear() {
+        chatCRUD.clear()
+        messageCRUD.clear()
+
+    }
+
     fun getChats() = chatCRUD.storage //+
 
     fun getUnreadChatsCount(): Map<Int, Int> { /// получаем 2 числа: число непрочитанных чатов и число непрочитанных сообщений
@@ -66,10 +72,13 @@ object ChatService {
     }
 
     fun getLastMessagesOfAllChats(): List<MessageData> {
-        return messageCRUD.storage.distinctBy { it.chatId }
+
+        val groupChat  = messageCRUD.storage
+            .filter { !it.isDeleted }
+            .groupBy { it.chatId }
+            .map{it.value.lastOrNull() ?: MessageData("No messages")}
+        return groupChat
+
     }
-    fun clear() {
-        chatCRUD.clear()
-        messageCRUD.clear()
-    }
+
 }

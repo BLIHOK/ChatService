@@ -64,5 +64,5 @@ fun main() {
 //    ChatService.deleteMessage(1, MessageData())
 //    println(ChatService.getUserMessagesInChat(0, 3, 1))
 //    println()
-//    println(ChatService.getLastMessagesOfAllChats())
+    println(ChatService.getLastMessagesOfAllChats())
 }

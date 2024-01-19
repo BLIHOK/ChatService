@@ -8,5 +8,6 @@ interface ChatCRUD<T : ChatLifeProp> {
     fun update(element: T): Boolean
 
     fun delete(element: T) : Boolean
+
     fun clear()
 }

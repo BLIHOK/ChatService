@@ -3,7 +3,6 @@ package services
 import data.ChatData
 import data.MessageData
 import data.UserData
-import modules.Chat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -23,8 +22,8 @@ class ChatServiceTest {
             user = UserData("Sergey", 0),
             chatId = 0,
             0,
-            false,
-            false
+            isDeleted = false,
+            isChecked = false
         )
         ChatService.createMessage(1, message1)
         val expectedAnswer = ChatData(id = 1, user = UserData("Sergey", 0))
@@ -39,8 +38,8 @@ class ChatServiceTest {
             user = UserData("Sergey", 0),
             chatId = 0,
             0,
-            false,
-            false
+            isDeleted = false,
+            isChecked = false
         )
         ChatService.createMessage(1, message1)
         val returnUnreaded = ChatService.getUnreadChatsCount()
@@ -56,7 +55,7 @@ class ChatServiceTest {
             chatId = 0,
             0,
             false,
-            false
+            isChecked = false
         )
         ChatService.createMessage(1, message1)
         val messageForCheck = message1.copy(chatId = 1, id = 1, isChecked = false)
@@ -73,7 +72,7 @@ class ChatServiceTest {
             chatId = 0,
             0,
             false,
-            false
+            isChecked = false
         )
         ChatService.createMessage(1, message1)
         val deletedChat = ChatService.deleteChat(1, ChatData())
@@ -89,7 +88,7 @@ class ChatServiceTest {
             chatId = 0,
             0,
             false,
-            false
+            isChecked = false
         )
         ChatService.createMessage(1, message1)
         val newCreatedMessage = message1.copy(chatId = 1, id = 1)
@@ -105,8 +104,8 @@ class ChatServiceTest {
             user = UserData("Sergey", 0),
             chatId = 0,
             0,
-            false,
-            false
+            isDeleted = false,
+            isChecked = false
         )
         ChatService.createMessage(1, message1)
         val updateMessage = MessageData(
@@ -116,7 +115,7 @@ class ChatServiceTest {
             chatId = 0,
             0,
             false,
-            false
+            isChecked = false
         )
         val update = ChatService.updateMessage(1, updateMessage)
         assertEquals(true, update)
@@ -131,7 +130,7 @@ class ChatServiceTest {
             chatId = 0,
             0,
             false,
-            false
+            isChecked = false
         )
         ChatService.createMessage(1, message1)
         val deleteMessage = ChatService.deleteMessage(1, MessageData())
@@ -147,7 +146,7 @@ class ChatServiceTest {
             chatId = 0,
             0,
             false,
-            false
+            isChecked = false
         )
         ChatService.createMessage(1, message1)
         val message2 = MessageData(
@@ -157,7 +156,7 @@ class ChatServiceTest {
             chatId = 0,
             0,
             false,
-            false
+            isChecked = false
         )
         ChatService.createMessage(2, message2)
         val updatedMessages = listOf(message1.copy(chatId = 1, id = 1), message2.copy(chatId = 2, id = 2))

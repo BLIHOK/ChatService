@@ -12,6 +12,8 @@ class Message : ChatCRUD<MessageData> {
 
     override fun clear() {
         storageIn.clear()
+        messageIdCount = 0
+
     }
 
     override fun create(element: MessageData) {
