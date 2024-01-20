@@ -6,6 +6,7 @@ import data.UserData
 import modules.Chat
 import modules.Message
 
+
 object ChatService {
     private val chatCRUD: Chat = Chat()
     private val messageCRUD: Message = Message()
@@ -58,7 +59,7 @@ object ChatService {
             chatCRUD.create(ChatData(user = UserData(name = element.user.name, userID = element.user.userID)))
 
             messageCRUD.create(element.copy(chatId = chatId))
-        }else messageCRUD.create(element.copy(chatId = chatId))
+        } else messageCRUD.create(element.copy(chatId = chatId))
     }
 
     fun updateMessage(messageId: Int, element: MessageData): Boolean = messageCRUD.update(element.copy(id = messageId))
@@ -71,14 +72,16 @@ object ChatService {
         return false
     }
 
-    fun getLastMessagesOfAllChats(): List<MessageData> {
+    fun getLastMessagesOfAllChats(): List<MessageData?> {
 
-        val groupChat  = messageCRUD.storage
-            .filter { !it.isDeleted }
+        val groupChat = messageCRUD.storage
             .groupBy { it.chatId }
-            .map{it.value.lastOrNull() ?: MessageData("No messages")}
-        return groupChat
+            .filterValues { !it.first().isDeleted }
+            .map { it.value.lastOrNull() }
+            .ifEmpty { return listOf(MessageData("No messages")) }
 
+        return groupChat
     }
+
 
 }
